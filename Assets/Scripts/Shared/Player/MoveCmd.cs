@@ -6,5 +6,7 @@ namespace Platformer.Shared.Player
         public float verticalInput;
 
         public int buttons;
+
+        public int tickNumber;
     }
 }

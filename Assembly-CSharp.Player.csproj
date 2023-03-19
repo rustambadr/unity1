@@ -49,6 +49,9 @@
      <Compile Include="Assets\Scripts\Shared\Physics\MoveType.cs" />
      <Compile Include="Assets\Scripts\Shared\Player\MoveCmd.cs" />
      <Compile Include="Assets\Scripts\Shared\Player\Buttons.cs" />
+     <Compile Include="Assets\Scripts\Shared\Network\NetworkTickManager.cs" />
+     <Compile Include="Assets\Scripts\Shared\Network\SimulationStep.cs" />
+     <Compile Include="Assets\Scripts\Shared\Network\NetworkPrediction.cs" />
      <Compile Include="Assets\Scripts\Client\Scene\ParallaxLayer.cs" />
      <Compile Include="Assets\Scripts\Shared\Physics\KinematicObject.cs" />
      <Compile Include="Assets\Scripts\Shared\Network\NetworkTransformExperement1.cs" />

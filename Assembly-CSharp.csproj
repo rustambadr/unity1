@@ -49,6 +49,9 @@
      <Compile Include="Assets\Scripts\Shared\Physics\MoveType.cs" />
      <Compile Include="Assets\Scripts\Shared\Player\MoveCmd.cs" />
      <Compile Include="Assets\Scripts\Shared\Player\Buttons.cs" />
+     <Compile Include="Assets\Scripts\Shared\Network\NetworkTickManager.cs" />
+     <Compile Include="Assets\Scripts\Shared\Network\SimulationStep.cs" />
+     <Compile Include="Assets\Scripts\Shared\Network\NetworkPrediction.cs" />
      <Compile Include="Assets\Scripts\Client\Scene\ParallaxLayer.cs" />
      <Compile Include="Assets\Scripts\Shared\Physics\KinematicObject.cs" />
      <Compile Include="Assets\Scripts\Shared\Network\NetworkTransformExperement1.cs" />
@@ -265,6 +268,7 @@
      <Folder Include="Library\PackageCache\com.unity.2d.sprite@1.0.0\Tests" />
      <None Include="Library\PackageCache\com.unity.modules.animation@1.0.0\package.json" />
      <None Include="Library\PackageCache\com.unity.2d.animation@9.0.1\package.json" />
+     <Folder Include="Assets\Adaptive Performance\Provider" />
      <None Include="Library\PackageCache\com.unity.collections@1.2.4\ValidationExceptions.json" />
      <None Include="Library\PackageCache\com.unity.burst@1.8.3\Unity.Burst.Unsafe.xml" />
      <None Include="Library\PackageCache\com.unity.2d.psdimporter@8.0.2\package.json" />

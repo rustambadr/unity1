@@ -1,18 +1,17 @@
+using System.Collections.Generic;
 using Mirage;
 using Platformer.Shared.Physics;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Platformer.Shared.Player
 {
     [AddComponentMenu("Platformer/Player/Controller")]
-    [DefaultExecutionOrder(2)]
     public class Controller : NetworkBehaviour
     {
-        /*        [SerializeField]
-                public MoveType moveType = MoveType.None;*/
+        // [SerializeField]
+        // public MoveType moveType = MoveType.None;
 
-        public List<MoveCmd> moveCmds = new List<MoveCmd>();
+        List<MoveCmd> moveCmds = new();
 
         KinematicObject kinematicObject;
 

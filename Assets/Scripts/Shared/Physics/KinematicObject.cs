@@ -93,7 +93,7 @@ namespace Platformer.Shared.Physics
             //    *//*                Rigidbody2D otherBody = hit.collider.GetComponent<Rigidbody2D>();
             //    if (otherBody != null)
             //    {
-            //        // Обработка столкновения
+            //        // РћР±СЂР°Р±РѕС‚РєР° СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЏ
             //    }
             //    *//*
             //}
@@ -106,7 +106,7 @@ namespace Platformer.Shared.Physics
             //lastMovementImpulse = movementImpulse;
         }
 
-        // Применяем гравитацию.
+        // РџСЂРёРјРµРЅСЏРµРј РіСЂР°РІРёС‚Р°С†РёСЋ.
         private void GravityUpdate()
         {
             isGround = bodyRigidbody2D.Cast(Vector2.down, contactFilter, hitBuffer, 0.1f) != 0;
@@ -175,7 +175,7 @@ namespace Platformer.Shared.Physics
 *//*                Rigidbody2D otherBody = hit.collider.GetComponent<Rigidbody2D>();
                 if (otherBody != null)
                 {
-                    // Обработка столкновения
+                    // РћР±СЂР°Р±РѕС‚РєР° СЃС‚РѕР»РєРЅРѕРІРµРЅРёСЏ
                 }*//*
             }
 

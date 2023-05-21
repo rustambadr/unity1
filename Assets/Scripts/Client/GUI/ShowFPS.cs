@@ -1,3 +1,4 @@
+using Mirror;
 using Platformer.Shared.Network;
 using UnityEngine;
 
@@ -47,6 +48,6 @@ public class ShowFPS : MonoBehaviour
     void OnGUI()
     {
         //Display the fps and round to 2 decimals
-        GUI.Label(new Rect(position, size), fps.ToString("F2") + "FPS" + "\n" + NetworkTickManager.tickCount, textStyle);
+        GUI.Label(new Rect(position, size), fps.ToString("F2") + "FPS" + "\n" + NetworkTime.localTime, textStyle);
     }
 }

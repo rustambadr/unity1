@@ -45,32 +45,27 @@
     <Analyzer Include="E:\Unity\2022.2.9f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\DisplayMetrics\DisplayMetricsAverageGui.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkPingDisplay.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\Experimental\NetworkRigidbody.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkManagerHud.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\DisplayMetrics\SetDisplayMetrics.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\DisplayMetrics\RequestServerMetrics.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\Visibility\HostRendererVisibility.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\HeadlessFrameLimiter.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\OnlineOfflineScene.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\ObjectReady.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkTransformBase.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\HeadlessAutoStart.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkManagerGUI.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\Experimental\NetworkTransform.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkMatchChecker.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\Experimental\NetworkTransformChild.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkAnimator.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\Experimental\NetworkTransformBase.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkTransformChild.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\Experimental\NetworkLerpRigidbody.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\AssemblyInfo.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\Visibility\SceneChecking\SceneVisibilityChecker.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\LobbyReady.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\Visibility\SceneChecking\NetworkSceneChecker.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkProximityChecker.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Components\NetworkTransform.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\DisplayMetrics\DisplayMetricsAverageGui.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkPingDisplay.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkManagerHud.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\DisplayMetrics\SetDisplayMetrics.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\DisplayMetrics\RequestServerMetrics.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\Visibility\HostRendererVisibility.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\HeadlessFrameLimiter.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\OnlineOfflineScene.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\ObjectReady.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkTransformBase.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\HeadlessAutoStart.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkManagerGUI.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkMatchChecker.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkAnimator.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkTransformChild.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\AssemblyInfo.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\Visibility\SceneChecking\SceneVisibilityChecker.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\LobbyReady.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\Visibility\SceneChecking\NetworkSceneChecker.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkProximityChecker.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Components\NetworkTransform.cs" />
      <Reference Include="UnityEngine">
      <HintPath>E:\Unity\2022.2.9f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
      </Reference>

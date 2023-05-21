@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using Platformer.Shared.Player;
 using UnityEngine;
 
@@ -13,8 +12,8 @@ namespace Platformer.Shared.Physics
 
         protected const float shellRadius = 0.01f;
         
-        public float maxSpeed = 5;
-        public float jumpSpeed = 1;
+        public float maxSpeed = 2;
+        public float jumpSpeed = 0.5f;
         Vector2 moveDir;
 
         Rigidbody2D bodyRigidbody2D;
@@ -39,20 +38,22 @@ namespace Platformer.Shared.Physics
 
         public void ApplyCmd(MoveCmd moveCmd)
         {
-            float horizontal = Mathf.Clamp(moveCmd.horizontalInput, -1f, 1f);
+            float horizontal = Mathf.Clamp(moveCmd.HorizontalInput, -1f, 1f);
             if (horizontal != 0)
             {
                 moveDir.x = horizontal * maxSpeed;
             }
 
-            if (!isJump && (moveCmd.buttons & Buttons.IN_JUMP) != 0)
+            if (!isJump && (moveCmd.Buttons & Buttons.IN_JUMP) != 0)
             {
                 moveDir.y = jumpSpeed;
                 isJump = true;
             }
+            
+            SFixedUpdate();
         }
 
-        protected virtual void FixedUpdate()
+        protected virtual void SFixedUpdate()
         {
             if (moveDir != Vector2.zero)
             {

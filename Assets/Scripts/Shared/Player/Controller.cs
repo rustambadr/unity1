@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
-using Mirage;
+using Mirror;
+using Platformer.Shared.Network.Prediction;
 using Platformer.Shared.Physics;
 using UnityEngine;
 
@@ -8,137 +10,133 @@ namespace Platformer.Shared.Player
     [AddComponentMenu("Platformer/Player/Controller")]
     public class Controller : NetworkBehaviour
     {
-        // [SerializeField]
-        // public MoveType moveType = MoveType.None;
+        /// <summary>
+        /// Буфер для хранения последних введенных команд.
+        /// </summary>
+        private readonly List<MoveCmd> _moveCmdList = new();
 
-        List<MoveCmd> moveCmds = new();
+        /// <summary>
+        /// Компонент кинематического движения.
+        /// </summary>
+        private KinematicObject _kinematicObject;
 
-        KinematicObject kinematicObject;
+        /// <summary>
+        /// Компонент предсказания движения.
+        /// </summary>
+        private NetworkPrediction _networkPrediction;
 
-        protected virtual void OnEnable()
+        // private void Update()
+        // {
+        //     if (isLocalPlayer)
+        //     {
+        //         HandleClientCommand();
+        //     }
+        // }
+
+        private void FixedUpdate()
         {
-            kinematicObject = GetComponent<KinematicObject>();
-        }
-
-        public virtual void Update()
-        {
-            if (IsLocalPlayer)
+            if (isLocalPlayer)
             {
-                kinematicObject.ApplyCmd(CreateMove());
+                HandleClientCommand();
+            }
+            
+            if (isServer)
+            {
+                HandleServerCommand();
             }
         }
 
-        protected virtual void FixedUpdate()
+        private void OnEnable()
         {
-            if (IsServer)
+            _kinematicObject = GetComponent<KinematicObject>();
+            if (_kinematicObject == null)
             {
-                SimulateMove();
+                throw new Exception("Не найден компонент KinematicObject.");
             }
-
-            //Debug.Log(Time.deltaTime);
+            
+            _networkPrediction = GetComponent<NetworkPrediction>();
+            if (_networkPrediction == null)
+            {
+                throw new Exception("Не найден компонент NetworkPrediction.");
+            }
         }
 
-
-        private void SimulateMove()
+        /// <summary>
+        /// Сбор введенных команд и отправка на сервер.
+        /// </summary>
+        private void HandleClientCommand()
         {
-            //Debug.Log("Count package" + moveCmds.Count);
+            MoveCmd cmd = CreateMoveCommand();
 
+            // if (!cmd.IsValid())
+            // {
+                // return;
+            // }
+
+            _kinematicObject.ApplyCmd(cmd);
+            _networkPrediction.CreateSnapshot(cmd.LocalTime);
+
+            ServerReceiveMoveCommand(cmd);
+        }
+
+        /// <summary>
+        /// Обработка введенных команд и отправка подтверждений на клиент.
+        /// </summary>
+        private void HandleServerCommand()
+        {
             try
             {
-                foreach (MoveCmd moveCmd in moveCmds)
+                foreach (MoveCmd cmd in _moveCmdList)
                 {
-                    kinematicObject.ApplyCmd(moveCmd);
+                    _kinematicObject.ApplyCmd(cmd);
+                    _networkPrediction.ServerSendSnapshot(cmd.LocalTime);
                 }
             }
             finally
             {
-                moveCmds.Clear();
+                _moveCmdList.Clear();
             }
         }
 
-        [LocalPlayer]
-        private MoveCmd CreateMove()
+        /// <summary>
+        /// Создание объекта команды с введенными данными клиента.
+        /// </summary>
+        private MoveCmd CreateMoveCommand()
         {
-            MoveCmd moveCmd = new MoveCmd();
-
-            moveCmd.horizontalInput = Input.GetAxis("Horizontal");
-            moveCmd.verticalInput = Input.GetAxis("Vertical");
-            moveCmd.buttons = 0;
-
-            if (moveCmd.horizontalInput > 0)
+            MoveCmd moveCmd = new MoveCmd
             {
-                moveCmd.buttons |= Buttons.IN_FORWARD;
+                HorizontalInput = Input.GetAxis("Horizontal"),
+                VerticalInput = Input.GetAxis("Vertical"),
+                Buttons = 0,
+                LocalTime = NetworkTime.localTime,
+            };
+
+            if (moveCmd.HorizontalInput > 0)
+            {
+                moveCmd.Buttons |= Buttons.IN_FORWARD;
             }
 
-            if (moveCmd.horizontalInput < 0)
+            if (moveCmd.HorizontalInput < 0)
             {
-                moveCmd.buttons |= Buttons.IN_BACK;
+                moveCmd.Buttons |= Buttons.IN_BACK;
             }
 
             if (Input.GetButton("Jump"))
             {
-                moveCmd.buttons |= Buttons.IN_JUMP;
+                moveCmd.Buttons |= Buttons.IN_JUMP;
             }
-
-            CmdMove(moveCmd);
 
             return moveCmd;
         }
 
-        [ServerRpc]
-        void CmdMove(MoveCmd moveCmd)
+        /// <summary>
+        /// Принимаем команду от клиента.
+        /// </summary>
+        [Command]
+        private void ServerReceiveMoveCommand(MoveCmd moveCmd)
         {
-            moveCmds.Add(moveCmd);
+            // todo Добавить ограничение по кол-ву команд.
+            _moveCmdList.Add(moveCmd);
         }
-
-        /*protected ContactFilter2D contactFilter;
-        protected RaycastHit2D[] hitBuffer = new RaycastHit2D[16];
-
-        protected virtual void OnEnable()
-        {
-            body = GetComponent<Rigidbody2D>();
-        }
-
-        protected virtual void Start()
-        {
-            contactFilter.useTriggers = false;
-            contactFilter.SetLayerMask(Physics2D.GetLayerCollisionMask(gameObject.layer));
-            contactFilter.useLayerMask = true;
-        }
-
-        protected virtual void FixedUpdate()
-        {
-            switch(moveType)
-            {
-                case MoveType.None:
-                    break;
-                case MoveType.Normal:
-                    MoveNormal();
-                    break;
-                default:
-                    throw new System.Exception("Unknown movetype.");
-            }
-            velocity += Physics2D.gravity * Time.deltaTime;
-
-            float distance = velocity.magnitude; 
-            var count = body.Cast(Vector2.down, contactFilter, hitBuffer, distance);
-            if (count != 0)
-            {
-                velocity.y = 0;
-                
-*/ /*                Rigidbody2D otherBody = hit.collider.GetComponent<Rigidbody2D>();
-                if (otherBody != null)
-                {
-                    // ��������� ������������
-                }*/ /*
-            }
-
-            body.position += velocity.normalized * distance;
-        }
-
-        private void MoveNormal()
-        {
-
-        }*/
     }
 }

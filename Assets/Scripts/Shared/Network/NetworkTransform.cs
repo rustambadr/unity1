@@ -1,16 +1,26 @@
-using Mirage;
+using Mirror;
+using Platformer.Shared.Network.Prediction;
 using UnityEngine;
 
 namespace Platformer.Shared.Network
 {
+    public struct SimulationStep
+    {
+        public Vector3 Position;
+        public Quaternion Rotation;
+        public Vector3 Scale;
+        public double Time;
+
+        public bool IsValid() => Time != 0;
+    }
+
     [AddComponentMenu("Platformer/Network/NetworkTransform")]
     public class NetworkTransform : NetworkBehaviour
     {
         // [Tooltip("Set to true if updates from server should be ignored by owner")]
         // public bool excludeOwnerUpdate = true;
 
-        [Header("Synchronization")] 
-        [Tooltip("Set to true if position should be synchronized")]
+        [Header("Synchronization")] [Tooltip("Set to true if position should be synchronized")]
         public bool syncPosition = true;
 
         [Tooltip("Set to true if rotation should be synchronized")]
@@ -29,61 +39,60 @@ namespace Platformer.Shared.Network
         [Tooltip("Changes to the transform must exceed these values to be transmitted on the network.")]
         public float localScaleSensitivity = .01f;
 
-        [Header("Diagnostics")]
-        public Vector3 lastPosition;
+        [Header("Diagnostics")] public Vector3 lastPosition;
         public Quaternion lastRotation;
         public Vector3 lastScale;
 
-        private SimulationStep lastServerSnap;
+        private SimulationStep _lastServerSnap;
+        private NetworkPrediction _networkPrediction;
 
-        private NetworkPrediction networkPrediction;
+        private Transform TargetTransform => transform;
 
-        private Transform targetTransform => transform;
-
-        private bool HasMoved => syncPosition && Vector3.SqrMagnitude(lastPosition - targetTransform.position) >
+        private bool HasMoved => syncPosition && Vector3.SqrMagnitude(lastPosition - TargetTransform.position) >
             localPositionSensitivity * localPositionSensitivity;
 
-        private bool HasRotated => syncRotation && Quaternion.Angle(lastRotation, targetTransform.rotation) >
+        private bool HasRotated => syncRotation && Quaternion.Angle(lastRotation, TargetTransform.rotation) >
             localRotationSensitivity;
 
-        private bool HasScaled => syncScale && Vector3.SqrMagnitude(lastScale - targetTransform.localScale) >
+        private bool HasScaled => syncScale && Vector3.SqrMagnitude(lastScale - TargetTransform.localScale) >
             localScaleSensitivity * localScaleSensitivity;
-
-        public bool IsPredicted => networkPrediction != null;
 
         private void FixedUpdate()
         {
-            if (IsServer)
+            if (isServer)
             {
-                if (IsPredicted) networkPrediction.CollectSnap();
-
                 if (HasEitherMovedRotatedScaled())
-                    RpcMove(targetTransform.position, targetTransform.rotation, targetTransform.localScale);
+                    RpcMove(TargetTransform.position, TargetTransform.rotation, TargetTransform.localScale);
             }
 
-            if (IsClient)
+            if (isClient && _lastServerSnap.IsValid())
             {
-                if (lastServerSnap.IsValid)
-                    ApplyPositionRotationScale(lastServerSnap);
+                ApplyPositionRotationScale(_lastServerSnap);
             }
         }
 
         private void OnEnable()
         {
-            networkPrediction = GetComponent<NetworkPrediction>();
+            _networkPrediction = GetComponent<NetworkPrediction>();
         }
 
         [ClientRpc]
         private void RpcMove(Vector3 position, Quaternion rotation, Vector3 scale)
         {
-            var temp = CreateSnap(position, rotation, scale);
+            SimulationStep simulationStep = new SimulationStep
+            {
+                Position = position,
+                Rotation = rotation,
+                Scale = scale,
+                Time = NetworkTime.time,
+            };
 
-            if (!IsServer) SetGoal(temp);
+            if (!isServer) SetGoal(simulationStep);
         }
 
         private void SetGoal(SimulationStep step)
         {
-            lastServerSnap = step;
+            _lastServerSnap = step;
         }
 
         private bool HasEitherMovedRotatedScaled()
@@ -91,11 +100,11 @@ namespace Platformer.Shared.Network
             var changed = HasMoved || HasRotated || HasScaled;
             if (changed)
             {
-                if (syncPosition) lastPosition = targetTransform.position;
+                if (syncPosition) lastPosition = TargetTransform.position;
 
-                if (syncRotation) lastRotation = targetTransform.rotation;
+                if (syncRotation) lastRotation = TargetTransform.rotation;
 
-                if (syncScale) lastScale = targetTransform.localScale;
+                if (syncScale) lastScale = TargetTransform.localScale;
             }
 
             return changed;
@@ -103,42 +112,21 @@ namespace Platformer.Shared.Network
 
         private void ApplyPositionRotationScale(SimulationStep step)
         {
-            if (IsPredicted && IsLocalPlayer)
+            if (isLocalPlayer)
             {
-                var error = networkPrediction.HasPredictionError(step);
-                if (!error)
+                if (!_networkPrediction.HasError)
                 {
                     return;
                 }
-                
-                if(error)
-                {
-                    if (Application.isEditor)
-                    {
-                        Debug.Log("Prediction error.");
-                    }
-                }
+
+                _networkPrediction.ResetError();
             }
-            
-            if (syncPosition) targetTransform.position = step.position;
 
-            if (syncRotation) targetTransform.rotation = step.rotation;
+            if (syncPosition) TargetTransform.position = step.Position;
 
-            if (syncScale) targetTransform.localScale = step.scale;
-        }
+            if (syncRotation) TargetTransform.rotation = step.Rotation;
 
-        /**
-         * Создать снимок состояния.
-         */
-        private SimulationStep CreateSnap(Vector3 position, Quaternion rotation, Vector3 scale)
-        {
-            return new SimulationStep
-            {
-                tickCount = NetworkTickManager.tickCount,
-                position = position,
-                rotation = rotation,
-                scale = scale
-            };
+            if (syncScale) TargetTransform.localScale = step.Scale;
         }
     }
 }

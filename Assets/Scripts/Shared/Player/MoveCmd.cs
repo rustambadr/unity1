@@ -1,12 +1,20 @@
 namespace Platformer.Shared.Player
 {
+    /// <summary>
+    /// Структура данных для объекта движений игрока.
+    /// </summary>
     public struct MoveCmd
     {
-        public float horizontalInput;
-        public float verticalInput;
+        public float HorizontalInput;
+        public float VerticalInput;
 
-        public int buttons;
+        public int Buttons;
 
-        public int tickNumber;
+        public double LocalTime;
+
+        /// <summary>
+        /// Проверяет пустая ли команда.
+        /// </summary>
+        public bool IsValid() => HorizontalInput != 0 || VerticalInput != 0 || Buttons != 0;
     }
 }

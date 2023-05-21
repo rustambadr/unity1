@@ -45,11 +45,14 @@
     <Analyzer Include="E:\Unity\2022.2.9f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Runtime\Sockets\Udp\NanoSocket.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Runtime\Sockets\Udp\NanoEndPoint.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Runtime\Sockets\Udp\NanoSockets\Scripts\NanoSockets.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Runtime\Sockets\Udp\UdpSocketFactory.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Runtime\Sockets\Udp\UdpSocket.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Runtime\Sockets\Udp\NanoSocket.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Runtime\Sockets\Udp\NanoSocket_NotSupported.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Runtime\Sockets\Udp\NanoSocketException.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Runtime\Sockets\Udp\NanoEndPoint.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Runtime\Sockets\Udp\NanoSockets\Scripts\NanoSockets.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Runtime\Sockets\Udp\InitUDP.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Runtime\Sockets\Udp\UdpSocketFactory.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Runtime\Sockets\Udp\UdpSocket.cs" />
      <Reference Include="UnityEngine">
      <HintPath>E:\Unity\2022.2.9f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
      </Reference>

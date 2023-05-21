@@ -45,9 +45,9 @@
     <Analyzer Include="E:\Unity\2022.2.9f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Authenticators\BasicAuthenticator.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Authenticators\TimeoutAuthenticator.cs" />
-     <Compile Include="Library\PackageCache\com.miragenet.mirage@130.3.0\Authenticators\AssemblyInfo.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Authenticators\BasicAuthenticator.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Authenticators\TimeoutAuthenticator.cs" />
+     <Compile Include="Library\PackageCache\com.miragenet.mirage@131.1.2\Authenticators\AssemblyInfo.cs" />
      <Reference Include="UnityEngine">
      <HintPath>E:\Unity\2022.2.9f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
      </Reference>
